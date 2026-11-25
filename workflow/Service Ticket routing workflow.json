@@ -1,0 +1,738 @@
+{
+  "name": "Service Ticket routing workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "8408b96d-1c87-49e1-b236-de32b4b8387e",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.output.priority.trim().toLowerCase() }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        880,
+        16
+      ],
+      "id": "4eeb2721-95d7-45ba-8ea3-eaab7adf404a",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2003797f-5fe6-40f0-b5c1-a398e80e1145",
+              "name": "=customer_name",
+              "value": "={{ $('On form submission').item.json['Customer Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "15d54121-2719-42cc-8435-b3922aa283ff",
+              "name": "issue",
+              "value": "={{ $('On form submission').item.json['Issue facing/Feedback'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5407553d-879e-4dd1-9e0a-99de80921cd1",
+              "name": "assigned_team",
+              "value": "Tier-1 Escalation Squad",
+              "type": "string"
+            },
+            {
+              "id": "5449dfa7-5118-485b-b87e-c279af558fd1",
+              "name": "priority",
+              "value": "={{ $('Basic LLM Chain').item.json.output.priority }}",
+              "type": "string"
+            },
+            {
+              "id": "11f1368d-b913-4bdb-9513-c90edc939aac",
+              "name": "category",
+              "value": "={{ $('Basic LLM Chain').item.json.output.category }}",
+              "type": "string"
+            },
+            {
+              "id": "551491fd-c1ae-4727-aa0c-a1628f953b38",
+              "name": "sentiment",
+              "value": "={{ $('Basic LLM Chain').item.json.output.sentiment }}",
+              "type": "string"
+            },
+            {
+              "id": "021ca283-469d-4640-a193-c0b0b00b4c7a",
+              "name": "sla_alert",
+              "value": "=Resolve {{ $('On form submission').item.json['Customer Name'] }}'s ticket within 2 hours",
+              "type": "string"
+            },
+            {
+              "id": "210b818d-bda2-461b-8778-7dd981266240",
+              "name": "suggested_reply",
+              "value": "={{ $json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1152,
+        -96
+      ],
+      "id": "09d06c11-44cb-4d5e-8708-f26d44c7f6af",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83dd5ab0-f021-461a-924d-de2fd1b7a05f",
+              "name": "customer_name",
+              "value": "={{ $('On form submission').item.json['Customer Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9bd97262-6d22-4237-8c48-aeec6b1608ba",
+              "name": "issue",
+              "value": "={{ $('On form submission').item.json['Issue facing/Feedback'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3e785a93-aa50-4f50-878c-7d86e60946fd",
+              "name": "assigned_team",
+              "value": "General Support Desk",
+              "type": "string"
+            },
+            {
+              "id": "56bf51a2-3c1e-4288-9060-837bcc3fad1c",
+              "name": "body.priority",
+              "value": "={{ $('Basic LLM Chain').item.json.output.priority }}",
+              "type": "string"
+            },
+            {
+              "id": "86af1632-174e-451e-a71e-8b05c576b437",
+              "name": "category",
+              "value": "={{ $('Basic LLM Chain').item.json.output.category }}",
+              "type": "string"
+            },
+            {
+              "id": "162171da-ad52-44e0-b612-e65f3dc50514",
+              "name": "sentiment",
+              "value": "={{ $('Basic LLM Chain').item.json.output.sentiment }}",
+              "type": "string"
+            },
+            {
+              "id": "e6d510b5-2f3d-4684-97f8-c61cb73c290e",
+              "name": "sla_alert",
+              "value": "=Standard Queue: Resolve {{ $('On form submission').item.json['Customer Name'] }}'s ticket within 24 hours",
+              "type": "string"
+            },
+            {
+              "id": "0845dce9-118f-40d1-bb45-a5a2d44bd625",
+              "name": "suggested_reply",
+              "value": "={{ $json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1168,
+        128
+      ],
+      "id": "a4bcb0f5-6e84-4ba5-99a3-ab77a28f4d98",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        16
+      ],
+      "id": "aadddbfd-1c03-472e-a01e-db2cffbd6adc",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/home/node/.n8n-files/routed_tickets.csv",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        1568,
+        16
+      ],
+      "id": "a9ab48f8-fe86-4fde-9d89-8b9558483064",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Classify the support ticket into JSON with strictly 3 keys: priority, category, sentiment.\n\nRules:\n- priority: \"High\" ONLY for outages, lockouts, failed payments, or double charges. Otherwise \"Low\".\n- category: \"Billing\" (invoice, refund, payment), \"Account Access\" (login, locked out, permissions), \"Feature Request\" (new feature, export), or \"Technical Bug\" (crash, 500 error, slow).\n- sentiment: \"Frustrated\", \"Neutral\", or \"Positive\".\n\nExamples:\nIssue: \"Our team is locked out of the admin portal!\" -> {\"priority\":\"High\",\"category\":\"Account Access\",\"sentiment\":\"Frustrated\"}\nIssue: \"Love the app! Can you add an Excel export button?\" -> {\"priority\":\"Low\",\"category\":\"Feature Request\",\"sentiment\":\"Positive\"}\nIssue: \"How can I download our past monthly GST invoice PDF?\" -> {\"priority\":\"Low\",\"category\":\"Billing\",\"sentiment\":\"Neutral\"}\n\nClassify this ticket:\nCustomer Name: {{ $json['Customer Name'] }}\nCustomer Issue: {{ $json['Issue facing/Feedback'] }}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        128,
+        16
+      ],
+      "id": "5df8a645-6114-4888-8405-11b621f4227f",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        0,
+        208
+      ],
+      "id": "a9240521-c00f-4a67-83d9-18c6b6363559",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "4ByNRnC94y9ZjRnU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"priority\": \"Low\",\n  \"category\": \"Billing\",\n  \"sentiment\": \"Neutral\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        208
+      ],
+      "id": "ecf1fd05-2a53-4164-804c-a29f993ca247",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        144,
+        384
+      ],
+      "id": "c0c6b9f8-a705-40cc-a15f-9e5f9af4ec1a",
+      "name": "Ollama Chat Model1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "4ByNRnC94y9ZjRnU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Customer Support Ticket Portal",
+        "formDescription": "Describe your issue below. We will get back to you.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Customer Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Issue facing/Feedback",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -128,
+        16
+      ],
+      "id": "c4718c30-463d-456c-9910-64f31d007b17",
+      "name": "On form submission",
+      "webhookId": "0a2a6ca2-1de8-4d0a-8471-5bb1bd78f3a6"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -592
+      ],
+      "id": "53fe7d7a-3d3f-4901-acca-57157670a8d4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/support_policy.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        -592
+      ],
+      "id": "37e19ba4-d6a9-4865-9f6e-9f3e9a393de1",
+      "name": "Read/Write Files from Disk1"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "cloudpulse_policy",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.4,
+      "position": [
+        672,
+        -592
+      ],
+      "id": "b7b892fe-f6d6-45c4-8f54-1717a698c1d7",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "model": "all-minilm:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -304
+      ],
+      "id": "2adae797-41d5-4a6b-913e-da5b4dbe233a",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "4ByNRnC94y9ZjRnU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        -384
+      ],
+      "id": "48f4211d-d8c7-43e0-9d1f-4cc0e93166c2",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 500,
+        "chunkOverlap": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -208
+      ],
+      "id": "38023ca8-b0a6-4a83-9a4b-a6c393645aee",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a polite CloudPulse CRM support agent.\nAnswer the customer's issue in 1 to 2 clear sentences using ONLY the provided policy context.\nIf the policy context does not cover the issue, politely state that a specialist will review their ticket shortly.\n\nCustomer Issue: {{ $('On form submission').item.json['Issue facing/Feedback'] }}",
+        "options": {
+          "systemPromptTemplate": "You are a polite CloudPulse CRM support agent. Answer the user's question in 1 to 2 clear sentences using ONLY the following policy context. If the policy context does not contain the answer, politely say a specialist will review their ticket shortly.\n\nAlways include exact URLs, menu paths, and timelines from the policy context word-for-word, and never tell users to log in through a status page.\n----------------\nContext: {context}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+      "typeVersion": 1.7,
+      "position": [
+        496,
+        16
+      ],
+      "id": "e9b382d1-21b1-4aab-b051-1cd3319b12d3",
+      "name": "Question and Answer Chain"
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        448,
+        256
+      ],
+      "id": "b92ce843-9a43-4e3d-b147-5b4868afc78e",
+      "name": "Ollama Chat Model2",
+      "credentials": {
+        "ollamaApi": {
+          "id": "4ByNRnC94y9ZjRnU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+      "typeVersion": 1,
+      "position": [
+        592,
+        224
+      ],
+      "id": "4e81b3eb-04e5-4723-b18e-db9027b86304",
+      "name": "Vector Store Retriever"
+    },
+    {
+      "parameters": {
+        "memoryKey": {
+          "__rl": true,
+          "value": "cloudpulse_policy",
+          "mode": "list",
+          "cachedResultName": "cloudpulse_policy"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.4,
+      "position": [
+        512,
+        416
+      ],
+      "id": "1cac1ecf-7235-4ea3-8004-912a19565439",
+      "name": "Simple Vector Store1"
+    },
+    {
+      "parameters": {
+        "model": "all-minilm:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        512,
+        592
+      ],
+      "id": "8313ac9c-a1c1-42ac-8142-0dc351f06148",
+      "name": "Embeddings Ollama1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "4ByNRnC94y9ZjRnU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Support Ticket Logged & Routed!",
+        "completionMessage": "=Your Query/ Issue: {{ $('On form submission').item.json['Issue facing/Feedback'] }}\n\nCategory: {{ $('Basic LLM Chain').item.json.output.category }}\nAssigned Team: {{ $('Edit Fields').isExecuted ? $('Edit Fields').item.json.assigned_team : $('Edit Fields1').item.json.assigned_team }}\n\nSuggested Reply:\n{{ $('Question and Answer Chain').item.json.response }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        1792,
+        16
+      ],
+      "id": "33dcb629-4cbb-48f3-a7a5-861b3c8065dd",
+      "name": "Form",
+      "webhookId": "5f161678-0133-417e-b439-30b118cfcfed"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk1": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Retriever": {
+      "ai_retriever": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_retriever",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Retriever",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Question and Answer Chain": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "59597ccc-0f4b-4288-8221-c37b8fed7af4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cb45c5d3f7343dbcddda381bc089a19a37b7dc8d9a32e862f78211202cfc4048"
+  },
+  "nodeGroups": [],
+  "id": "BkIBsp6MuypUMgGQ",
+  "tags": []
+}

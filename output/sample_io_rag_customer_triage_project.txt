@@ -1,0 +1,51 @@
+
+1. Billing — Duplicate Charge (Tests Refund Timeline Retrieval)
+
+• Customer Name: Prashanth
+• Issue/Feedback: You double charged our corporate credit card today! Please refund the extra amount immediately.
+• Expected Triage: High | Billing | Frustrated | 2 hours
+• Expected RAG Reply Detail: 100% refund initiated within 4 business hours, reflects in 3 to 5 business days.
+
+2. Account Access — Enterprise SSO Failure (Tests Emergency Bypass URL Retrieval)
+
+• Customer Name: Karthik
+• Issue/Feedback: SAML SSO login is completely down for our entire Chennai office and nobody can get in!
+• Expected Triage: High | Account Access | Frustrated | 2 hours
+• Expected RAG Reply Detail: Use the emergency fallback link :// with master admin credentials while Tier-2 refreshes the certificate.
+
+
+3. Account Access — User Permissions (Tests Exact Navigation Path Retrieval)
+
+• Customer Name: Divya
+• Issue/Feedback: How do I give our new intern read-only access to view reports without letting them edit leads?
+• Expected Triage: Low | Account Access | Neutral | 24 hours
+• Expected RAG Reply Detail: Go to Settings > Users & Hierarchy > Roles and assign the Report Viewer (Read-Only) role.
+
+4. Technical Bug — Production 502 Outage (Tests Incident Status Retrieval)
+
+• Customer Name: Rohan
+• Issue/Feedback: Our CRM Leads page is throwing a 502 Bad Gateway crash right now and blocking our sales team!
+• Expected Triage: High | Technical Bug | Frustrated | 2 hours
+• Expected RAG Reply Detail: Escalated to Tier-2 DevOps with live updates every 30 minutes on ://.
+
+
+5. Technical Bug — Browser Slowness (Tests Troubleshooting Retrieval)
+
+• Customer Name: Meera
+• Issue/Feedback: The dashboard loads very slowly on Safari, though everything else works fine.
+• Expected Triage: Low | Technical Bug | Neutral | 24 hours
+• Expected RAG Reply Detail: Optimized for Chrome/Edge; clear browser site cache and disable strict tracking prevention for ://.
+
+6. Feature Request — Roadmap Inquiry (Tests Positive Sentiment & Roadmap Rule)
+
+• Customer Name: Ananya
+• Issue/Feedback: Love the new automation builder! Can you add a native WhatsApp integration in a future update?
+• Expected Triage: Low | Feature Request | Positive | 24 hours
+• Expected RAG Reply Detail: Logged in the Product Feedback Tracker and reviewed during the monthly roadmap meeting on the first Wednesday of every month.
+
+7. Hallucination Guardrail Test — Out-of-Policy Question
+
+• Customer Name: Arjun
+• Issue/Feedback: Do you offer a 50% student discount or special NGO pricing for annual plans?
+• Expected Triage: Low | Billing | Neutral | 24 hours
+• Expected RAG Reply Detail: Because student/NGO discounts are not in support_policy.txt, the AI should safely fall back to "a specialist will review your ticket shortly" instead of inventing a fake discount!

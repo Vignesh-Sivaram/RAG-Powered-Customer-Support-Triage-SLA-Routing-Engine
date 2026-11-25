@@ -1,0 +1,57 @@
+# CLOUDPULSE CRM — CUSTOMER SUPPORT & SLA POLICY MANUAL
+
+## SECTION 1: SLA TIERS & ESCALATION RULES
+1.1 High-Priority Escalation (Tier-2 Escalation Squad):
+- Trigger Conditions: Production system outages (500/502 errors), organization-wide login or SSO lockouts, failed auto-renewal payments causing account suspension, or duplicate billing charges.
+- Response & Resolution SLA: Tier-2 engineers acknowledge within 15 minutes and resolve within 1 to 2 hours.
+- Customer Communication Rule: Always apologize for the disruption, confirm immediate escalation to the Tier-2 Escalation Squad, and provide the emergency status page link (status.cloudpulsecrm.com).
+
+1.2 Standard Support Queue (General Support Desk):
+- Trigger Conditions: How-to questions, routine GST invoice requests, user permission updates, minor UI slowness on specific browsers, and product feature requests.
+- Response & Resolution SLA: General Support Desk agents respond within 24 hours (48 hours for feature request reviews).
+
+---
+
+## SECTION 2: BILLING, GST INVOICES & REFUNDS
+2.1 Downloading Monthly GST Invoices:
+- Customers can download past GST-compliant tax invoices anytime by logging in as an Admin and navigating to: Settings > Billing & Subscription > Tax Invoices > Download PDF.
+- If a customer needs their company GSTIN added to past invoices, they must reply with their GST certificate; Billing Ops updates and re-issues the PDF within 24 hours.
+
+2.2 Failed Auto-Renewal & Account Suspension:
+- When a corporate card auto-renewal fails, CloudPulse CRM grants a 48-hour grace period before suspending live workspace access.
+- If an account is already suspended due to a failed payment, the Tier-2 Billing Specialist temporarily restores workspace access for 24 hours immediately upon ticket receipt while the customer updates their payment method under Settings > Payment Methods.
+
+2.3 Duplicate Charges & Refund Policy:
+- Verified duplicate credit card or UPI charges are refunded 100% to the original payment source.
+- Once flagged as High Priority by support, the refund is initiated within 4 business hours and reflects in the customer's bank statement within 3 to 5 business days.
+
+---
+
+## SECTION 3: ACCOUNT ACCESS, SSO & USER PERMISSIONS
+3.1 Admin Portal Lockouts & Password Resets:
+- If an Admin is locked out after 5 failed login attempts, the security lock automatically clears after 30 minutes, or a Tier-2 Access Engineer can manually unlock the tenant within 1 hour after verifying the registered admin email.
+- For urgent lockouts blocking a live sales team, Tier-2 bypasses the cooldown immediately upon ticket verification.
+
+3.2 Enterprise SSO (SAML 2.0) Failures:
+- If SAML Single Sign-On fails for an entire branch, Admins can still log in using the emergency fallback URL (app.cloudpulsecrm.com/login?sso=bypass) with their master admin credentials while Tier-2 refreshes the expired SAML certificate.
+
+3.3 Updating User Roles & Read-Only Permissions:
+- To grant an intern or auditor read-only access to reports without allowing lead edits, an Admin must go to: Settings > Users & Hierarchy > Roles > Assign "Report Viewer (Read-Only)" role.
+
+---
+
+## SECTION 4: TECHNICAL BUGS & PERFORMANCE ISSUES
+4.1 Server Crashes (500 / 502 Bad Gateway Errors):
+- Any 500 or 502 error blocking access to the CRM Leads or Checkout module is treated as a Severity-1 incident.
+- Tier-2 DevOps checks API gateway health immediately and posts live incident updates every 30 minutes on status.cloudpulsecrm.com.
+
+4.2 Browser-Specific Slowness & Minor UI Glitches:
+- CloudPulse CRM is optimized for Google Chrome and Microsoft Edge.
+- If a user experiences slow loading on Safari or a minor visual glitch (such as a misaligned dark-mode toggle), advise them to clear browser site cache, disable strict tracking prevention for app.cloudpulsecrm.com, and confirm that the bug has been logged for the next bi-weekly UI patch.
+
+---
+
+## SECTION 5: FEATURE REQUESTS & PRODUCT ROADMAP
+5.1 Logging Enhancements (Exports, Integrations, UI Ideas):
+- CloudPulse CRM reviews all customer feature requests (such as scheduled CSV/Excel exports or native WhatsApp connectors) during the monthly Product Roadmap meeting held on the first Wednesday of every month.
+- Support agents must thank the customer for the suggestion, confirm it has been logged in the Product Feedback Tracker with their account ID, and clarify that no immediate SLA fix is required.

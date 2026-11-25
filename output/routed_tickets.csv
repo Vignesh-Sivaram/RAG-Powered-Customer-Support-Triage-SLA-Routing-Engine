@@ -1,0 +1,2 @@
+﻿customer_name,issue,assigned_team,priority,category,sentiment,sla_alert,suggested_reply
+Vignesh,Production API sync is failing with 500 errors and blocking our sales team,Tier-1 Escalation Squad,High,Technical Bug,Frustrated,Resolve Vignesh's ticket within 2 hours,"The production API sync is failing with 500 errors, causing a blockage for the sales team. Please follow the escalation rules and provide the emergency status page link (status.cloudpulsecrm.com) for immediate attention."
