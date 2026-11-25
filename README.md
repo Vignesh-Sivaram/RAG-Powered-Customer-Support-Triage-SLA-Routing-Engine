@@ -25,8 +25,11 @@ Manual Trigger ──► Read Policy File (support_policy.txt)
                Default Data Loader + Recursive Splitter (500 chars / 50 overlap)
                           │
                           ▼
-               Embeddings Ollama (all-minilm) ──► Simple Vector Store [Insert: cloudpulse_policy]
+               Embeddings Ollama (all-minilm) ──► Simple Vector Store [Insert: cloudpulse_policy as memory key]
+```
+<img width="903" height="373" alt="image" src="https://github.com/user-attachments/assets/2a3bbd14-68ed-45da-974b-a625eb212869" />
 
+```
 [BOTTOM FLOW: LIVE PRODUCTION TRIAGE & ROUTING]
 n8n Form Trigger (Customer Name, Issue/Feedback)
        │
@@ -48,11 +51,13 @@ n8n Form Trigger (Customer Name, Issue/Feedback)
        ▼
   n8n Form Ending (Displays Ticket Summary, Assigned Team, SLA Target & Suggested Reply)
 ```
+<img width="1386" height="547" alt="image" src="https://github.com/user-attachments/assets/a33c2c1b-2877-4e91-94fb-41d730e5b0d1" />
+
 
 ## 🛠️ Tech Stack & Infrastructure
 
 * **Workflow Orchestration:** n8n (`v2.47.7`) running in Docker with WebSocket push backend (`N8N_PUSH_BACKEND=websocket`) and persistent storage volumes.
-* **Local LLM Inference:** Ollama running natively on Windows (`OLLAMA_HOST=0.0.0.0`), bridged into Docker via `http://host.docker.internal:11434`.
+* **Local LLM Inference:** Ollama running natively on Windows (`OLLAMA_HOST=0.0.0.0`), bridged into Docker via `http://host.docker.internal`.
 * **Models Used (Optimized for 8GB RAM / 2GB WSL2 Allocation):**
   * **Chat & Reasoning:** `qwen2.5:1.5b` (`Temperature = 0` for deterministic JSON parsing and strict policy adherence).
   * **Vector Embeddings:** `all-minilm` (fast, lightweight semantic embeddings).
@@ -73,13 +78,13 @@ n8n Form Trigger (Customer Name, Issue/Feedback)
 * Docker Desktop & Ollama installed locally.
 * Pull the required lightweight models in your terminal:
   ```bash
-  ollama pull qwen2.5:0.5b
+  ollama pull qwen2.5:1.5b
   ollama pull all-minilm
   ```
 * Ensure Ollama accepts container connections by setting the environment variable `OLLAMA_HOST=0.0.0.0`.
 
 ### 2. Launch n8n in Docker
-```bash
+```command prompt
 docker run -d \
   --name n8n \
   --restart always \
@@ -89,10 +94,19 @@ docker run -d \
   -v n8n_files:/home/node/.n8n-files \
   n8nio/n8n:2.47.7
 ```
-*(Ensure `/home/node/.n8n-files` permissions are owned by `node:node` and copy `data/support_policy.txt` into the mounted volume).*
+- Grant `/home/node/.n8n-files` folder permissions to `node:node` and copy `data/support_policy.txt` into this volume).*
+<img width="1907" height="720" alt="image" src="https://github.com/user-attachments/assets/14bf168d-5745-4238-86e0-726a934d4bf4" />
+<img width="1245" height="771" alt="image" src="https://github.com/user-attachments/assets/31f05ff0-8621-466a-8c3c-441fa5c0b38f" />
 
 ### 3. Import & Run
 1. Open `http://localhost:5678` and import `workflow/rag_ticket_triage_workflow.json`.
-2. Configure the **Ollama Credential** pointing to `http://host.docker.internal:11434`.
+2. Configure the **Ollama Credential** pointing to `http://host.docker.internal`.
 3. Click **Execute Workflow** on the top **Manual Trigger** node once to embed `support_policy.txt` into the `cloudpulse_policy` vector store.
 4. Activate the workflow, open the **n8n Form Trigger** production URL, submit a test ticket (e.g., *"Production API sync is failing with 500 errors and blocking our sales team"*), and view the automated SLA triage output.
+
+Output:
+<img width="1665" height="798" alt="image" src="https://github.com/user-attachments/assets/b147c7f3-be86-40dd-a117-78a8d9a821b2" />
+1. Customer Support Ticket form, when submitted - with workflow executing in background
+
+<img width="1715" height="757" alt="image" src="https://github.com/user-attachments/assets/7b2add34-56d0-44ac-84e8-c5597dc1ba70" />
+2. When Support ticket is logged and routed to assigned team, with suggested reply (fixes) to customer generated based on support policy provided to model
